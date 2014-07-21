@@ -14,6 +14,8 @@
 
 using UnityEngine;
 using System.Collections;
+using DialoguerEditor;
+using DialoguerCore;
 
 public class crosshair : MonoBehaviour {
 
@@ -21,6 +23,7 @@ public class crosshair : MonoBehaviour {
 	public GameObject normalTex;
 
 	[HideInInspector] public bool canInteract = false;
+	[HideInInspector] public bool inDialogue;
 
 	public static GameObject currGo = null;
 	private Rect position;
@@ -29,7 +32,13 @@ public class crosshair : MonoBehaviour {
 	private Vector3 screenPoint = new Vector3(Screen.width/2, Screen.height/2, 0);
 
 
+	void Awake(){
+		Dialoguer.Initialize();
+	}
+
+
 	void Update(){
+
 		canInteract = false;
 		ray = Camera.main.ScreenPointToRay( screenPoint );
 		if (Physics.Raycast(ray, out hit, 7)){
@@ -40,8 +49,18 @@ public class crosshair : MonoBehaviour {
 
 		//canInteract = true;
 		updateVisual();
+
+		if(canInteract && Input.GetKeyUp(KeyCode.E) && !inDialogue){
+			inDialogue = true;
+			Screen.lockCursor = false;
+			Dialoguer.StartDialogue(3);
+		}else if(!canInteract){
+			inDialogue = false;
+			Screen.lockCursor = true;
+		}
 	}
 	
+
 	void updateVisual(){
 		if(canInteract){
 			NGUITools.SetActive(interactTex, true);
