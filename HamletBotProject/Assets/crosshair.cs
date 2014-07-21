@@ -1,18 +1,4 @@
-﻿/**************************************************************************
- **                                                                       *
- **                COPYRIGHT AND CONFIDENTIALITY NOTICE                   *
- **                                                                       *
- **    Copyright (c) 2014 Hacksaw Games. All rights reserved.             *
- **                                                                       *
- **    This software contains information confidential and proprietary    *
- **    to Hacksaw Games. It shall not be reproduced in whole or in        *
- **    part, or transferred to other documents, or disclosed to third     *
- **    parties, or used for any purpose other than that for which it was  *
- **    obtained, without the prior written consent of Hacksaw Games.      *
- **                                                                       *
- **************************************************************************/
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using DialoguerEditor;
 using DialoguerCore;
@@ -30,7 +16,7 @@ public class crosshair : MonoBehaviour {
 	private Ray ray;
 	private RaycastHit hit;
 	private Vector3 screenPoint = new Vector3(Screen.width/2, Screen.height/2, 0);
-
+	private int curID = 0;
 
 	void Awake(){
 		Dialoguer.Initialize();
@@ -44,6 +30,7 @@ public class crosshair : MonoBehaviour {
 		if (Physics.Raycast(ray, out hit, 7)){
 			if(hit.transform.gameObject.tag =="Guest"){
 				canInteract = true;
+				curID = hit.transform.gameObject.GetComponent<Character>().ID;
 			}
 		}
 
@@ -53,7 +40,7 @@ public class crosshair : MonoBehaviour {
 		if(canInteract && Input.GetKeyUp(KeyCode.E) && !inDialogue){
 			inDialogue = true;
 			Screen.lockCursor = false;
-			Dialoguer.StartDialogue(3);
+			Dialoguer.StartDialogue(curID);
 		}else if(!canInteract){
 			inDialogue = false;
 			Screen.lockCursor = true;
