@@ -41,7 +41,8 @@ public class CharController : MonoBehaviour {
 
 	public void FixedUpdate(){
 		//Rotating Character and Gravity
-		charControl();
+		//if(!GetComponentInChildren<crosshair>().inDialogue)
+			charControl();
 	}
 
 	void charControl(){
