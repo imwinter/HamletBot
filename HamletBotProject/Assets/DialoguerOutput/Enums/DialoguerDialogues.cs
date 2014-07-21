@@ -4,4 +4,7 @@ public enum DialoguerDialogues{
 	My_First_Dialogue = 0,
 	My_Second_Dialogue = 2,
 	Temp = 3,
+	Ophelia = 4,
+	King_Claudius = 5,
+	Polonius = 6,
 }
